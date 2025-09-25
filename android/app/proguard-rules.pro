@@ -1,0 +1,3 @@
+-keep class org.tensorflow.** { *; }
+-dontwarn org.tensorflow.**
+-keep class org.checkerframework.** { *; }
