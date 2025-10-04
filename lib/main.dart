@@ -85,7 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('แจ้งเตือน'),
-            content: const Text('เกิดข้อผิดพลาดภาพดังกล่าวอาจจะไม่ใช่เนื้อหมูสามชั้น กรุณาลองใหม่อีกครั้ง'),
+            content: const Text(
+                'เกิดข้อผิดพลาดภาพดังกล่าวอาจจะไม่ใช่เนื้อหมูสามชั้น กรุณาลองใหม่อีกครั้ง'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -122,8 +123,8 @@ class _MyHomePageState extends State<MyHomePage> {
     if (result == null) return Colors.black;
 
     if (result.contains('Half-Fresh')) return Colors.deepOrangeAccent; // กึ่งสด
-    if (result.contains('Fresh')) return Colors.green;       // สด
-    if (result.contains('Spoiled')) return Colors.red;       // เสีย
+    if (result.contains('Fresh')) return Colors.green; // สด
+    if (result.contains('Spoiled')) return Colors.red; // เสีย
 
     return Colors.black; // default
   }
@@ -164,8 +165,10 @@ class _MyHomePageState extends State<MyHomePage> {
     double h = 0;
 
     if (diff != 0) {
-      if (max == r) h = (60 * ((g - b) / diff) + 360) % 360;
-      else if (max == g) h = (60 * ((b - r) / diff) + 120) % 360;
+      if (max == r)
+        h = (60 * ((g - b) / diff) + 360) % 360;
+      else if (max == g)
+        h = (60 * ((b - r) / diff) + 120) % 360;
       else if (max == b) h = (60 * ((r - g) / diff) + 240) % 360;
     }
 
@@ -177,187 +180,176 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery
+        .of(context)
+        .size;
+    final h = size.height;
+    final w = size.width;
+
+    // กำหนดช่องว่างตามสัดส่วนหน้าจอ (ปรับอัตโนมัติทุกเครื่อง)
+    final gapS = h * 0.02; // เล็ก
+    final gapM = h * 0.03; // กลาง
+    final gapL = h * 0.04; // ใหญ่
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Determining Pork Freshness',
           style: TextStyle(
-            fontSize: 24,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+              fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
         ),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFF3853FF), // สีฝั่งซ้าย
-                Color(0xFF04D8CD), // สีฝั่งขวา
-              ],
-              begin: Alignment.topLeft,// เริ่มต้น บนซ้าย
-              end: Alignment.bottomRight, // สิ่นสุดที่ ล่างขวา
+              colors: [Color(0xFF3853FF), Color(0xFF04D8CD)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
           ),
         ),
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Card(
-                margin: const EdgeInsets.all(6),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12), // เพิ่มมุมโค้งเหมือนปุ่ม
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: w * 0.05, vertical: gapS),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                // การ์ดรูปภาพ — ใช้สัดส่วนแทน fix height
+                Card(
+                  margin: EdgeInsets.all(w * 0.02),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Container(
+                    width: w * 0.9,
+                    // ใช้สัดส่วนทำให้สูงพอดีทุกจอ
+                    constraints: BoxConstraints(
+                        minHeight: h * 0.24, maxHeight: h * 0.34),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF3853FF), Color(0xFF04D8CD)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: _image == null
+                        ? const Icon(
+                        Icons.image_outlined, size: 125, color: Colors.white)
+                        : ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Center(
+                        child: Image.file(_image!),
+                      ),
+                    ),
+                  ),
                 ),
-                child: Container(
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  height: MediaQuery.of(context).size.height / 2.7,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF3853FF), // โทนสีฝั่งซ้าย
-                        Color(0xFF04D8CD), // โทนสีฝั่งขวา
+
+                // เว้นระยะระหว่างการ์ดกับข้อความ
+                SizedBox(height: gapM),
+
+                // ข้อความ
+                Card(
+                  color: Colors.transparent,
+                  elevation: 0,
+                  margin: EdgeInsets.zero,
+                  child: Padding(
+                    padding: EdgeInsets.all(w * 0.02),
+                    child: Column(
+                      children: _image == null
+                          ? const [
+                        Text(
+                          'กรุณาเลือก Function สำหรับการประเมินเนื้อหมูสามชั้น',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 24,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ]
+                          : [
+                        const Text(
+                          'ระดับความสดของเนื้อหมูชิ้นนี้',
+                          style: TextStyle(fontSize: 24,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          _result ?? '',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 26,
+                            color: _getResultColor(_result),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                  ),
-                  child: _image == null
-                      ? const Icon(
-                    Icons.image_outlined,
-                    size: 125,
-                    color: Colors.white,
-                  )
-                      : ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      _image!,
                     ),
                   ),
                 ),
-              ),
 
-              Card(
-                color: Colors.transparent,
-                elevation: 0,
-                margin: const EdgeInsets.all(20),
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: _image == null
-                        ? const [
-                      Text(
-                        'กรุณาเลือก Function สำหรับ \n การประเมินเนื้อหมูสามชั้น',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ]
-                        : [
-                      const Text(
-                        'ระดับความสดของเนื้อหมูชิ้นนี้',
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        _result ?? '',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 26,
-                          color: _getResultColor(_result),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                // เว้นระยะ “ก่อนถึงปุ่ม” ให้เยอะขึ้น เพื่อไม่แนบติด
+                SizedBox(height: gapL),
 
-              // ปุ่มแยกกัน 2 อัน
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Row(
+                // ปุ่ม 2 อัน
+                Row(
                   children: [
-                    // ปุ่มเลือกรูปภาพ
+                    // เลือกรูปภาพ
                     Expanded(
                       child: InkWell(
                         onTap: _pickImage,
                         child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
-                          padding: const EdgeInsets.all(15),
+                          margin: EdgeInsets.symmetric(horizontal: w * 0.02),
+                          padding: EdgeInsets.all(w * 0.035),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFF3853FF), // โทนสีฝั่งซ้าย
-                                Color(0xFF04D8CD), // โทนสีฝั่งขวา
-                              ],
+                              colors: [Color(0xFF3853FF), Color(0xFF04D8CD)],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
                           ),
-                          child: Column(
+                          child: const Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
+                            children: [
                               Icon(Icons.image, color: Colors.white, size: 60),
                               SizedBox(height: 8),
-                              Text(
-                                "เลือกรูปภาพ",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              Text('เลือกรูปภาพ',
+                                  style: TextStyle(color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
                       ),
                     ),
 
-                    // ปุ่มถ่ายรูป
+                    // ถ่ายรูป
                     Expanded(
                       child: InkWell(
                         onTap: _captureImage,
                         child: Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 25),
-                          padding: const EdgeInsets.all(15),
+                          margin: EdgeInsets.symmetric(horizontal: w * 0.02),
+                          padding: EdgeInsets.all(w * 0.035),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
                             gradient: const LinearGradient(
-                              colors: [
-                                Color(0xFF3853FF), // โทนสีฝั่งซ้าย
-                                Color(0xFF04D8CD), // โทนสีฝั่งขวา
-                              ],
+                              colors: [Color(0xFF3853FF), Color(0xFF04D8CD)],
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                             ),
                           ),
-                          child: Column(
+                          child: const Column(
                             mainAxisSize: MainAxisSize.min,
-                            children: const [
-                              Icon(Icons.camera_alt, color: Colors.white, size: 60),
+                            children: [
+                              Icon(Icons.camera_alt, color: Colors.white,
+                                  size: 60),
                               SizedBox(height: 8),
-                              Text(
-                                "ถ่ายรูป",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                              Text('ถ่ายรูป',
+                                  style: TextStyle(color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
                             ],
                           ),
                         ),
@@ -365,8 +357,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
-              ),
-            ],
+
+                // กันเผื่อชนขอบล่าง/ปุ่มระบบ
+                SizedBox(height: gapS),
+              ],
+            ),
           ),
         ),
       ),
