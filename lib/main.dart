@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('แจ้งเตือน'),
-            content: const Text('ภาพนี้ไม่ใช่เนื้อหมูสามชั้น กรุณาลองใหม่อีกครั้ง'),
+            content: const Text('เกิดข้อผิดพลาดภาพดังกล่าวอาจจะไม่ใช่เนื้อหมูสามชั้น กรุณาลองใหม่อีกครั้ง'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -206,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Card(
-                margin: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(6),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12), // เพิ่มมุมโค้งเหมือนปุ่ม
                 ),
@@ -252,10 +252,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: _image == null
                         ? const [
                       Text(
-                        'กรุณาเลือก Function สำหรับการประเมินเนื้อหมูสามชั้น',
+                        'กรุณาเลือก Function สำหรับ \n การประเมินเนื้อหมูสามชั้น',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 26,
+                          fontSize: 25,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
