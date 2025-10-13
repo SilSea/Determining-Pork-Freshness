@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
           return AlertDialog(
             title: const Text('แจ้งเตือน'),
             content: const Text(
-                'เกิดข้อผิดพลาดภาพดังกล่าวอาจจะไม่ใช่เนื้อหมูสามชั้น กรุณาลองใหม่อีกครั้ง'),
+                'เกิดข้อผิดพลาดภาพดังกล่าไม่ใช่เนื้อหมูสามชั้น กรุณาลองใหม่อีกครั้ง'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -115,7 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
       final List<double> probs = List<double>.from(freshOutput[0]);
       final maxProb = probs.reduce((a, b) => a > b ? a : b);
       final index = probs.indexOf(maxProb);
-      _result = 'ระดับความสด: ${labels[index]}';
+      _result = '${labels[index]}';
     });
   }
 
@@ -270,7 +270,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           : [
                         const Text(
                           'ระดับความสดของเนื้อหมูชิ้นนี้',
-                          style: TextStyle(fontSize: 24,
+                          style: TextStyle(fontSize: 22,
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
