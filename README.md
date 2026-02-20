@@ -3,29 +3,15 @@
 แอปพลิเคชันสำหรับตรวจสอบและจำแนกระดับความสดของเนื้อหมูสามชั้น (Pork Belly) ซึ่งเป็นส่วนหนึ่งของปริญญานิพนธ์ (โครงงานจบการศึกษา) ตัวแอปพลิเคชันพัฒนาด้วย **Flutter** และขับเคลื่อนด้วยโมเดล **Deep Learning** ที่ถูกฝึกสอน (Train) ด้วยชุดข้อมูลภาพถ่ายเนื้อหมูสามชั้นที่จัดเก็บโดยเฉพาะ เพื่อให้ได้ความแม่นยำสูงสุดในการประเมินคุณภาพของเนื้อหมู
 
 ## ตัวอย่างแอปพลิเคชัน
-<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
-  <div style="text-align: center;">
-    <p><strong>หน้าจอหลัก</strong></p>
-    <img src="assets/imgs/readme/home_screen.png" width="250" alt="หน้าจอหลัก">
-  </div>
-</div>
+| หน้าจอหลัก |
+| :---: |
+| <img src="assets/imgs/readme/home_screen.png" width="250" alt="หน้าจอหลัก"> |
 
-<div style="display: flex; justify-content: center; gap: 40px;">
-  <div style="text-align: center;">
-    <p><strong>พยากรณ์เนื้อหมูสด</strong></p>
-    <img src="assets/imgs/readme/predict_fresh.png" width="250" alt="พยากรณ์ว่าเป็นเนื้อหมูสด">
-  </div>
-  
-  <div style="text-align: center;">
-    <p><strong>พยากรณ์เนื้อหมูกึ่งสด</strong></p>
-    <img src="assets/imgs/readme/predict_half.png" width="250" alt="พยากรณ์ว่าเป็นเนื้อหมูกึ่งสด">
-  </div>
-  
-  <div style="text-align: center;">
-    <p><strong>พยากรณ์เนื้อหมูเสีย</strong></p>
-    <img src="assets/imgs/readme/predict_spoiled.png" width="250" alt="พยากรณ์ว่าเป็นเนื้อหมูเสีย">
-  </div>
-</div>
+<br>
+
+| พยากรณ์เนื้อหมูสด | พยากรณ์เนื้อหมูกึ่งสด | พยากรณ์เนื้อหมูเสีย |
+| :---: | :---: | :---: |
+| <img src="assets/imgs/readme/predict_fresh.png" width="250" alt="พยากรณ์ว่าเป็นเนื้อหมูสด"> | <img src="assets/imgs/readme/predict_half.png" width="250" alt="พยากรณ์ว่าเป็นเนื้อหมูกึ่งสด"> | <img src="assets/imgs/readme/predict_spoiled.png" width="250" alt="พยากรณ์ว่าเป็นเนื้อหมูเสีย"> |
 
 ## วัตถุประสงค์ของโครงงาน (Objectives)
 
